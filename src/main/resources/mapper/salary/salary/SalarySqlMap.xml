@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kr.co.seoulit.insa.salary.mapper.SeverancePayMapper">
+
+    <resultMap type="kr.co.seoulit.insa.salary.to.SeverancePayTO" id="severancePayResult">
+        <result property="applyDate" column="APPLY_DATE"/>
+        <result property="severanceType" column="SEVERANCE_TYPE"/>
+        <result property="empCode" column="EMP_CODE"/>
+        <result property="empName" column="EMP_NAME"/>
+        <result property="workDays" column="WORK_DAYS"/>
+        <result property="severancePay" column="SEVERANCE_PAY"/>
+        <result property="severanceDeduction" column="SEVERANCE_DEDUCTION"/>
+        <result property="realSeverancePay" column="REAL_SEVERANCE_PAY"/>
+        <result property="retireDate" column="RETIRE_DATE"/>
+        <result property="hireDate" column="HIRE_DATE"/>
+        <result property="firstDay" column="FIRST_DAY"/>
+        <result property="today" column="TODAY"/>
+    </resultMap>
+
+    <!--퇴직금 조회-->
+
+    <select id="findSeverancePayList" parameterType="map" resultMap="severancePayResult">
+        <![CDATA[
+        SELECT
+            EMP_CODE,
+            EMP_NAME,
+            SEVERANCE_PAY,
+            WORK_DAYS,
+            APPLY_DATE,
+            SEVERANCE_TYPE,
+            SEVERANCE_DEDUCTION,
+            REAL_SEVERANCE_PAY,
+            RETIRE_DATE,
+            HIRE_DATE,
+            FIRST_DAY,
+            TODAY
+        FROM
+            SEVERANCE_PAY
+        WHERE
+            EMP_CODE = #{empCode}
+        ]]>
+    </select>
+
+
+    <!--퇴직금 등록-->
+
+    <insert id="registSeverancePay">
+    <![CDATA[
+    INSERT INTO SEVERANCE_PAY
+    (EMP_CODE, EMP_NAME, SEVERANCE_PAY)
+    VALUES
+    (#{empCode}, #{empName}, #{severancePay}
+    ]]>
+    </insert>
+
+<!--    퇴직금 삭제-->
+
+    <delete id="deleteSeverancePay" parameterType="kr.co.seoulit.insa.salary.to.SeverancePayTO">
+    <![CDATA[
+    DELETE FROM SEVERANCE_PAY
+    WHERE EMP_CODE = #{empCode}
+    ]]>
+    </delete>
+
+</mapper>
